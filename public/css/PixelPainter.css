@@ -1,0 +1,29 @@
+body 
+{
+  background:white;
+}
+.square, .canvas
+{
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+  border: 1px solid black;
+ /* height: 2.5rem;
+  width: 2.5rem;*/
+  width: 60px;
+  height: 60px;
+  background-color: white;
+  padding:0;
+  margin: 0;
+}
+
+.square#selection:hover{
+  outline: 6px solid yellow;
+}
+
+
+/*
+#controls{
+  border: 1px solid white;
+}*/
+

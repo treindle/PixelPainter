@@ -1,0 +1,26 @@
+doctype
+html(lang="en")
+head
+  meta(charset="UTF-8")
+  title PixelPainter
+  //- script(src="app.js")
+  link(rel="stylesheet", href="/css/PixelPainter.css")
+body
+  h1 PixelPainter
+  form( action = "/pic", method="PUT")
+    fieldset
+      div.name
+        input( type = "text", name = "name", placeholder = "Creator")
+      div.id
+        input( type ="text", name = "id", placeholder = "Masterpiece name")
+      button#save Save
+  #controls
+  #artboard
+  script(type="text/javascript" src="http://code.jquery.com/jquery-1.10.2.min.js")
+  script(src="/js/PixelPainter.js")
+        //- (type = "array", name = "artboard")
+  //- section#controls
+
+  //- section#artboard
+        
+
