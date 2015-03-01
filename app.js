@@ -1,8 +1,7 @@
 var express = require('express')
 var app = express();
 var bodyParser = require('body-parser');
-// var control = require(__dirname + '/public/js/PixelPainter.js');
-// var artboard = require(__dirname + '/public/js/PixelPainter.js');
+
 
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/test');
@@ -21,15 +20,17 @@ var picSchema = new Schema({
 var Pic = mongoose.model('Pic', picSchema);
 app.use(express.static(__dirname + "/public"));
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 app.set('view engine', 'jade');
 
 app.get('/', function (req, res) {
   res.render('index');
 });
-//below: testing
-app.get('/pic', function (req, res) {
-  res.render('/pic/' + id);
-});
+
+// //below: testing
+// app.get('/pic', function (req, res) {
+//   res.render('/pic/' + id);
+// });
 
 app.put('/pic/:id?', function (req, res) {
 
@@ -74,8 +75,3 @@ var server = app.listen(3000, function () {
 
   console.log('Example app listening at http://%s:%s', host, port);
 });
-
-// $('.clear').click(function(){
-//   $('.username').empty();
-//   $('.message').empty();
-// });
