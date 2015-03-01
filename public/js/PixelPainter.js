@@ -5,7 +5,7 @@
 
 
 //below: create random color
-$(function() {
+$(document).ready(function() {
   var input = prompt('Type an integer between 1 and 10');
   var color_pick = null;
 
@@ -57,15 +57,36 @@ $(function() {
   });
 
   $("#save").click(function(event){
+    var artboard=[];
+    var control=[];
     event.preventDefault();
     $('.square').each(function(index, element){
-      var result = $(element).css("background-color");
-      console.log(result);
+      var store_square = $(element).css("background-color");
+      control.push(store_square);
+    });
+    $('.canvas').each(function(index, element){
+      var store_canvas = $(element).css("background-color");
+      artboard.push(store_canvas);
+      console.log(store_canvas)
+    });
+
+    var data = {
+      artboard: artboard,
+      control: control
+    };
+
+    $.ajax({
+      type: "POST",
+      url: "/pic",
+      data: JSON.stringify(data),
+      success: function(){
+        alert('successfully saved')
+      },
+      dataType: "JSON"
     });
   });
-
-  
 });
+
 // if(typeOf input!=number){
 //   alert('invalid');
 // }

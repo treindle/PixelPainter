@@ -1,95 +1,79 @@
 var express = require('express')
 var app = express();
-// var bodyParser = require('body-parser');
+var bodyParser = require('body-parser');
+// var control = require(__dirname + '/public/js/PixelPainter.js');
+// var artboard = require(__dirname + '/public/js/PixelPainter.js');
 
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/test');
 var Schema = mongoose.Schema;
 
-// //defines type of Schema to store
-// var pixelPaint = new Schema({
-//   username: String,
-//   message: String,
-//   timestamp: Date,
-//   id: Number,
-//   controls: Array,
-//   artboard: Array
-//  }); 
+//defines type of Schema to store
+var picSchema = new Schema({
+  name: String,
+  id: String,
+  timestamp: Date,
+  control: Array,
+  artboard: Array
+ }); 
 
 //creates model
-// var Pic = mongoose.model('Pic', "views/charts.jade");
+var Pic = mongoose.model('Pic', picSchema);
 app.use(express.static(__dirname + "/public"));
-// app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: false }));
 app.set('view engine', 'jade');
 
 app.get('/', function (req, res) {
   res.render('index');
 });
+//below: testing
+app.get('/pic', function (req, res) {
+  res.render('/pic/' + id);
+});
 
-app.listen(3000);
+app.put('/pic/:id?', function (req, res) {
 
-// app.get('/pic/:id?', function (req, res) {
+  var id = req.params.id || "";
+  var control = control || "";
+  var artboard = artboard || "";
 
-  // var id = req.params.id || "";
+  // //finds all pics
+  Pic.find(function(err, pics){
+    if (err) throw err;
+
+    res.render('pics', { id: id, control: control, artboard: artboard });
+  });
+
+});
+
+app.post('/pic', function (req, res) {
+console.log(req.body);
   // var controls = req.params.controls || "";
   // var artboard = req.params.artboard || "";
 
-  // //finds all pics
-  // Pic.find(function(err, chats){
-  //   if (err) throw err;
-
-  //   res.render('pics', { id: id, controls: controls, artboard: arboard });
-  // });
-
-// });
-
-// app.post('/pic', function (req, res) {
-
-//   var controls = req.params.controls || "";
-//   var artboard = req.params.artboard || "";
-
-//   //creates chat object
+  //creates chat object
 //   var pic = new Pic(
 //     { 
-//       controls : controls,
+//       control : control,
 //       artboard : artboard
 //     } 
 //   );
-//   //saves chat to db
+// //   //saves chat to db
 //   pic.save(function (err) {
 //     if (err) throw err;
-//     res.redirect('/pic/' + id);
+//     // res.render('saved');
+//     res.save('/pic/' + id);
+//     // res.render('pics', { id: id, control: control, artboard: artboard });
 //   });
+});
 
-// });
+var server = app.listen(3000, function () {
 
+  var host = server.address().address;
+  var port = server.address().port;
 
-//below it Cat example
-// var Cat = mongoose.model('Cat', { name: String });
-// app.get('/', function (req, res) {
-//   res.send('Hello World!');
-// })
-
-//   var kitty = new Cat({ name: 'Zildjian' });
-//   kitty.save(function (err) {
-//     if (err) throw err;
-//     console.log('meow');
-//   });
-
-//   Cat.find(function(err, cats){
-//     if (err) throw err;
-//     res.json(cats);
-//   });
-
-// });
-
-// var server = app.listen(3000, function () {
-
-//   var host = server.address().address;
-//   var port = server.address().port;
-
-//   console.log('Example app listening at http://%s:%s', host, port);
-// });
+  console.log('Example app listening at http://%s:%s', host, port);
+});
 
 // $('.clear').click(function(){
 //   $('.username').empty();
